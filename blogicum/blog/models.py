@@ -7,7 +7,7 @@ from . import constants
 User = get_user_model()
 
 
-class PublishedModel(models.Model):
+class PublishedCreatedAbstract(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -23,9 +23,9 @@ class PublishedModel(models.Model):
         ordering = ('-created_at',)
 
 
-class Category(PublishedModel):
+class Category(PublishedCreatedAbstract):
     title = models.CharField(
-        max_length=constants.MAX_LENGTH_TITLE,
+        max_length=constants.MAX_LENGTH_NAME,
         verbose_name='Заголовок',
     )
     description = models.TextField(
@@ -46,10 +46,10 @@ class Category(PublishedModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title
+        return self.title[:20]
 
 
-class Location(PublishedModel):
+class Location(PublishedCreatedAbstract):
     name = models.CharField(
         max_length=constants.MAX_LENGTH_NAME,
         verbose_name='Название места',
@@ -60,12 +60,12 @@ class Location(PublishedModel):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name
+        return self.name[:20]
 
 
-class Post(PublishedModel):
+class Post(PublishedCreatedAbstract):
     title = models.CharField(
-        max_length=constants.MAX_LENGTH_TITLE,
+        max_length=constants.MAX_LENGTH_NAME,
         verbose_name='Заголовок',
     )
     text = models.TextField(
@@ -104,4 +104,4 @@ class Post(PublishedModel):
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.title
+        return self.title[:20]
