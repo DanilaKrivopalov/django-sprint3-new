@@ -5,7 +5,7 @@ from . import constants
 from .models import Category, Post
 
 
-def filter_published_posts(queryset):
+def filter_posts_by_publication(queryset):
     return queryset.filter(
         pub_date__lte=timezone.now(),
         is_published=True,
@@ -18,7 +18,9 @@ def filter_published_posts(queryset):
 
 
 def index(request):
-    post_list = filter_published_posts(Post.objects)[:constants.POSTS_LIMIT]
+    post_list = filter_posts_by_publication(
+        Post.objects
+    )[:constants.POSTS_LIMIT]
 
     return render(
         request,
@@ -29,7 +31,7 @@ def index(request):
 
 def post_detail(request, post_id):
     post = get_object_or_404(
-        filter_published_posts(Post.objects),
+        filter_posts_by_publication(Post.objects),
         pk=post_id,
     )
 
@@ -47,7 +49,7 @@ def category_posts(request, category_slug):
         is_published=True,
     )
 
-    post_list = filter_published_posts(category.posts)
+    post_list = filter_posts_by_publication(category.posts)
 
     return render(
         request,

@@ -7,7 +7,7 @@ from . import constants
 User = get_user_model()
 
 
-class PublishedCreatedAbstract(models.Model):
+class IsPublishedAtAbstract(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -23,9 +23,9 @@ class PublishedCreatedAbstract(models.Model):
         ordering = ('-created_at',)
 
 
-class Category(PublishedCreatedAbstract):
+class Category(IsPublishedAtAbstract):
     title = models.CharField(
-        max_length=constants.MAX_LENGTH_NAME,
+        max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Заголовок',
     )
     description = models.TextField(
@@ -46,12 +46,12 @@ class Category(PublishedCreatedAbstract):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title[:20]
+        return self.title[:constants.MAX_LENGTH_STR]
 
 
-class Location(PublishedCreatedAbstract):
+class Location(IsPublishedAtAbstract):
     name = models.CharField(
-        max_length=constants.MAX_LENGTH_NAME,
+        max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Название места',
     )
 
@@ -60,12 +60,12 @@ class Location(PublishedCreatedAbstract):
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name[:20]
+        return self.name[:constants.MAX_LENGTH_STR]
 
 
-class Post(PublishedCreatedAbstract):
+class Post(IsPublishedAtAbstract):
     title = models.CharField(
-        max_length=constants.MAX_LENGTH_NAME,
+        max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Заголовок',
     )
     text = models.TextField(
@@ -104,4 +104,4 @@ class Post(PublishedCreatedAbstract):
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return self.title[:20]
+        return self.title[:constants.MAX_LENGTH_STR]
