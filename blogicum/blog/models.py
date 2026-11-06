@@ -7,7 +7,7 @@ from . import constants
 User = get_user_model()
 
 
-class IsPublishedAtAbstract(models.Model):
+class IsPublishedCreatedAbstract(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name='Опубликовано',
@@ -23,7 +23,7 @@ class IsPublishedAtAbstract(models.Model):
         ordering = ('-created_at',)
 
 
-class Category(IsPublishedAtAbstract):
+class Category(IsPublishedCreatedAbstract):
     title = models.CharField(
         max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Заголовок',
@@ -49,7 +49,7 @@ class Category(IsPublishedAtAbstract):
         return self.title[:constants.MAX_LENGTH_STR]
 
 
-class Location(IsPublishedAtAbstract):
+class Location(IsPublishedCreatedAbstract):
     name = models.CharField(
         max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Название места',
@@ -63,7 +63,7 @@ class Location(IsPublishedAtAbstract):
         return self.name[:constants.MAX_LENGTH_STR]
 
 
-class Post(IsPublishedAtAbstract):
+class Post(IsPublishedCreatedAbstract):
     title = models.CharField(
         max_length=constants.MAX_LENGTH_CHARFIELD,
         verbose_name='Заголовок',
